@@ -1,1 +1,77 @@
+import os
+import numpy
+import random
+import matplotlib.pyplot as plt
+import cv2
+from tqdm import tqdm
+
+DATA_PATH = r"G:\Uni stuff\SEM10 (fall 23)\01651 - COMPUTER VISION AND PATTERN RECOGNITION [A]\code\CIFAR-10-images-master\CIFAR-10-images-master\train"
+Train_data = []
+Categories = os.listdir(DATA_PATH)
+Categories
+['airplane',
+ 'automobile',
+ 'bird',
+ 'cat',
+ 'deer',
+ 'dog',
+ 'frog',
+ 'horse',
+ 'ship',
+ 'truck']
+for c in Categories:
+    path = os.path.join(DATA_PATH, c)
+    print(f"Category: {c}")
+    image_paths = os.listdir(path)
+    #image_paths = image_paths[:500] #limit to 500 to speed up training, it takes nearly 2 hours with 500 imgs per category
+    for img in tqdm(image_paths):
+        img_arr = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)
+        Train_data.append((img_arr, Categories.index(c)))
+    print("\n")  
+Category: airplane
+100%|████████████████████████████████████████████████████████████████████████████| 5000/5000 [00:00<00:00, 7229.32it/s]
+
+Category: automobile
+100%|████████████████████████████████████████████████████████████████████████████| 5000/5000 [00:00<00:00, 7260.76it/s]
+
+Category: bird
+100%|████████████████████████████████████████████████████████████████████████████| 5000/5000 [00:00<00:00, 7105.92it/s]
+
+Category: cat
+100%|████████████████████████████████████████████████████████████████████████████| 5000/5000 [00:00<00:00, 7177.38it/s]
+
+Category: deer
+100%|████████████████████████████████████████████████████████████████████████████| 5000/5000 [00:00<00:00, 7271.32it/s]
+
+Category: dog
+100%|████████████████████████████████████████████████████████████████████████████| 5000/5000 [00:00<00:00, 7378.82it/s]
+
+Category: frog
+100%|████████████████████████████████████████████████████████████████████████████| 5000/5000 [00:00<00:00, 7218.87it/s]
+
+Category: horse
+100%|████████████████████████████████████████████████████████████████████████████| 5000/5000 [00:00<00:00, 6918.92it/s]
+
+Category: ship
+100%|████████████████████████████████████████████████████████████████████████████| 5000/5000 [00:00<00:00, 7292.55it/s]
+
+Category: truck
+100%|████████████████████████████████████████████████████████████████████████████| 5000/5000 [00:00<00:00, 7450.28it/s]
+
+for c in Categories:
+    images_in_category = [item for item in Train_data if item[1] == Categories.index(c)]
+    if images_in_category:
+        first_image, label = images_in_category[0]
+        plt.imshow(first_image, cmap='gray')
+        plt.title(f"Category: {c}, Label: {label}")
+        plt.show()
+
+
+
+
+
+
+
+
+
 
